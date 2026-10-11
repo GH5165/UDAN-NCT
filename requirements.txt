@@ -1,0 +1,8 @@
+torch>=1.11
+numpy
+scipy
+scikit-image>=0.19
+PyWavelets
+pillow
+matplotlib
+scikit-learn
