@@ -1,109 +1,93 @@
 # UDAN-NCT: Unsupervised Domain Adaptation Network for Low-Flux Neutron CT Image Denoising
 
-This repository contains the training, evaluation and ablation code for the
-manuscript *"Unsupervised Domain Adaptation Network for Low-Flux Neutron CT
-Image Denoising"* (revised version), including all experiments added during
-revision (direct-transfer baselines, supervised upper bound, MMD-transplant
-variants, MMD sensitivity analysis, larger-domain-gap evaluation and t-SNE
-feature visualization).
+Complete code release for the manuscript. The repository is organized in three
+layers that together cover every experiment in the paper and its revision:
+
+```
+udan_original/         Original UDAN training code (PyTorch)
+                       - main.py            : UDAN training (source-supervised + MMD target alignment)
+                       - model3.py          : UDAN architecture (WT/DnCNN branch, MMD after down4)  [paper model]
+                       - model5.py          : ablation - skip connections instead of WT branch
+                       - model6.py          : ablation - without MMD
+                       - datasets.py, mmd.py, unet_parts.py, test_chest.py, ...
+comparison_original/   Original comparison-network experiments (PyTorch)
+                       - run/run_DnCNN.py, run_REDCNN.py, run_FBPConvNet.py : supervised training on
+                         the X-ray source pairs + direct transfer to NCT
+                       - run/compare_SSIM.py : unified metric re-evaluation
+                       - net/  : DnCNN / REDCNN / FBPConvNet definitions
+                       - dataset/, myTool/  : data loading and normalization utilities
+matlab/                MATLAB data pipeline (FRM II projections -> FDK/SART)
+                       - readRaw.m                : uint16 .raw projection -> tif conversion
+                       - tigre_work/raw_FDK.m     : clean FDK reconstruction (reference images)
+                       - tigre_work/raw_noise_FDK.m : TIGRE addCTnoise Poisson simulation (I0) + FDK
+                         (low-flux inputs; requires the TIGRE toolbox: https://github.com/CERN/TIGRE,
+                          Utilities/addCTnoise.m)
+                       - tigre_work/raw_SART.m, raw_OSART.m, raw_SART_TV.m : SART reconstructions
+                       - ART/demo1_ART.m, ART.m   : ART-based baseline
+                       - noise/addNoise.m         : radon-domain multiplicative Gaussian noise (X-ray)
+revision_experiments/  Unified-protocol experiments added during revision (PyTorch)
+                       - train_supervised.py : direct-transfer baselines + supervised UDAN upper bound
+                       - train_udan.py       : UDAN / ablations / MMD-transplant variants / MMD
+                                               sensitivity (sigma, lambda, depth, batch) / domain-gap
+                       - nets.py             : all network variants incl. residual output anchoring
+                       - final_eval.py       : unified evaluation (inscribed-FOV-circle protocol)
+                       - tsne_features.py    : feature alignment visualization (Figure 9)
+                       - sart_python.py      : re-projection SART baseline with early stopping
+results/final_table.json   All quantitative results under the unified protocol
+```
+
+Note: the scripts under `udan_original/`, `comparison_original/` and `matlab/`
+are the original research code and reference the original data paths; the
+scripts under `revision_experiments/` are the corrected, self-contained
+re-implementations used to produce every table of the revised manuscript under
+one documented protocol.
 
 ## Method summary
 
-UDAN denoises low-flux neutron CT (NCT) images without paired NCT labels:
+UDAN denoises low-flux NCT without paired NCT labels:
+- Source domain (supervised): paired low-/normal-flux X-ray CT (MSE loss).
+- Target domain (unsupervised): unlabeled low-flux NCT; encoder features of
+  both domains aligned with an MMD loss (single Gaussian RBF kernel, sigma = 9,
+  per-channel computation at the deepest encoder stage, batch 1).
+- Architecture: U-Net encoder-decoder; the two deepest skip connections are
+  replaced by a wavelet-transform branch (bior1.3 low-pass subbands) followed
+  by compact DnCNN blocks.
 
-- **Source domain (supervised)**: paired low-/normal-flux X-ray CT images
-  (low-flux input -> normal-flux label), MSE reconstruction loss.
-- **Target domain (unsupervised)**: unlabeled low-flux NCT images; the encoder
-  features of both domains are aligned with a Maximum Mean Discrepancy (MMD)
-  loss attached after the deepest encoder stage (1024-channel, 32x32).
-- **Architecture**: U-Net style encoder-decoder; the skip connections of the
-  two deepest decoder stages are replaced by a **wavelet transform branch**
-  (3-level `bior1.3` low-pass subbands) followed by compact DnCNN blocks.
-- "Unsupervised" refers strictly to the target NCT domain (no paired labels);
-  the source X-ray domain is trained supervised, following the standard
-  unsupervised domain adaptation setting.
+## Data layout (revision experiments)
 
-## Data layout expected by the scripts
-
-Update the path constants at the top of `common.py`:
+Update the path constants in `revision_experiments/common.py`:
 
 | Constant | Content |
 |---|---|
-| `XRAY_FULL` / `XRAY_LOW` | paired normal-/low-flux X-ray CT slices (512x512 PNG, 122 pairs) |
-| `NCT_TRAIN_LOW` | unlabeled low-flux NCT slices (projection-domain Poisson simulation, I0 = 1e4) |
-| `NCT_REF` / `NCT_LOW` | NCT test set: normal-flux FDK reference + low-flux input (31 name-matched pairs) |
-| `NCT_LOW_1E3` | harsher low-flux test set (I0 = 1e3) for the larger-domain-gap experiment |
+| XRAY_FULL / XRAY_LOW | paired normal-/low-flux X-ray CT slices (512x512 PNG) |
+| NCT_TRAIN_LOW | unlabeled low-flux NCT slices (Poisson simulation, I0 = 1e4) |
+| NCT_REF / NCT_LOW | NCT test set: normal-flux FDK reference + low-flux input |
+| NCT_LOW_1E3 | harsher low-flux test set (I0 = 1e3) for the domain-gap experiment |
 
-Low-flux NCT data generation (MATLAB/TIGRE, `addCTnoise` model):
-
+Low-flux NCT generation (MATLAB/TIGRE, `matlab/tigre_work/raw_noise_FDK.m`):
 ```matlab
-Im = I0 * exp(-p / max(p(:)));          % p: measured intensity projections
-Im = poissrnd(Im) + randn(size(Im))*0.5; % photon + electronic noise
+Im = I0 * exp(-p / max(p(:)));            % p: measured intensity projections
+Im = poissrnd(Im) + randn(size(Im))*0.5;  % photon + electronic noise
 p_noisy = log(I0 ./ max(Im,1e-6)) * max(p(:));
-b = -log(p_noisy / (max(p_noisy(:))+1)); % line integrals -> FDK
+b = -log(p_noisy / (max(p_noisy(:))+1));  % line integrals -> FDK
 ```
 
-## Unified evaluation protocol (used for all tables in the revision)
+## Unified evaluation protocol (revision tables)
 
-- Images loaded as grayscale, divided by 255 (float [0,1]).
-- Metrics: SSIM and PSNR with `data_range=1`, RMSE = sqrt(MSE),
-  computed inside the inscribed circle of the reconstruction FOV (radius
-  240 px), excluding parallel-beam corner regions and the FDK peripheral
-  error rim; mean +/- SD over 31 test pairs.
-- Auxiliary: high-pass correlation (hp_corr), edge preservation index (EPI),
-  contrast bias.
-- Model selection: for every trained network the checkpoint with the highest
-  full-frame SSIM on the evaluation set is kept (identical rule for all
-  methods).
-
-## Reproduction
-
-```bash
-# 1. direct-transfer baselines (supervised on X-ray, applied to NCT)
-python train_supervised.py --net dncnn --name DnCNN-Xray
-python train_supervised.py --net redcnn --name REDCNN-Xray
-python train_supervised.py --net fbpconvnet --name FBPConvNet-Xray
-
-# 2. supervised UDAN upper bound (paired NCT)
-python train_supervised.py --net udan_sup --train_inputs <NCT_TRAIN_LOW> \
-       --train_labels <NCT_TRAIN_CLEAN>
-
-# 3. UDAN / ablations / MMD transplant / sensitivity
-python train_udan.py --model udan --name UDAN            # baseline (sigma=9)
-python train_udan.py --model udan --mmd off --name UDAN-noMMD
-python train_udan.py --model udan_nowt --name UDAN-noWT
-python train_udan.py --model dncnn_mmd --name DnCNN-MMD
-python train_udan.py --model redcnn_mmd --name REDCNN-MMD
-python train_udan.py --model udan --sigma 1   --name UDAN-sigma1
-python train_udan.py --model udan --sigma 100 --name UDAN-sigma100
-python train_udan.py --model udan --lam 0.5   --name UDAN-lam0.5
-python train_udan.py --model udan --lam 2     --name UDAN-lam2
-python train_udan.py --model udan --mmd_loc down3 --name UDAN-loc-down3
-python train_udan.py --model udan --bs 2      --name UDAN-bs2
-python train_udan.py --model udan --bs 4      --name UDAN-bs4
-
-# 4. larger domain gap (adapt toward I0=1e3 target)
-python train_udan.py --model udan --target <FDK_raw3_noise_1e3> \
-       --eval_input <FDK_raw_200Views_noise1e3> --name UDAN-1e3
-
-# 5. SART baseline (image-domain re-projection, scikit-image iradon_sart)
-python sart_python.py
-
-# 6. final tables + t-SNE figure
-python final_eval.py
-python tsne_features.py
-```
-
-Training configuration (all runs): Adam, lr 1e-5, betas (0.9, 0.999),
-100 epochs, batch 1 (UDA) / 2 (supervised), MSE + MMD (single Gaussian RBF
-kernel, sigma = 9 by default, per-channel computation, see `train_udan.py`).
+- Images loaded as grayscale, /255 (float [0,1]).
+- SSIM / PSNR with data_range=1, RMSE = sqrt(MSE), computed inside the
+  inscribed circle of the reconstruction FOV (radius 240 px); 31 name-matched
+  test pairs; mean +/- SD.
+- Model selection: highest full-frame SSIM on the evaluation set, identical
+  rule for every method.
 
 ## Environment
 
-Python 3.8-3.10, PyTorch >= 1.11 (CUDA), see `requirements.txt`.
+Python 3.8-3.10, PyTorch >= 1.11 (CUDA), scikit-image, PyWavelets,
+scikit-learn; MATLAB with the TIGRE toolbox for the projection pipeline.
 
 ## Citation / license
 
-Code released under MIT license. NCT projection data (FRM II, glude-box
-sample) is available from the Forschungs-Neutronenquelle Heinz Maier-Leibnitz
-under license; see the manuscript's Data Availability statement.
+MIT license. NCT projection data (FRM II, glued-box sample) available from the
+Forschungs-Neutronenquelle Heinz Maier-Leibnitz under license; see the
+manuscript's Data Availability statement.

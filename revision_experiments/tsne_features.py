@@ -65,7 +65,7 @@ def main():
         stats[tag] = d2
         Z = np.concatenate([fx, fn])
         Z2 = TSNE(n_components=2, init='pca', random_state=0,
-                  perplexity=15).fit_transform(Z)
+                  perplexity=30).fit_transform(Z)
         ax.scatter(Z2[:N_PER_DOMAIN, 0], Z2[:N_PER_DOMAIN, 1],
                    s=18, c='#1f77b4', label='X-ray CT (source)', alpha=0.8)
         ax.scatter(Z2[N_PER_DOMAIN:, 0], Z2[N_PER_DOMAIN:, 1],
