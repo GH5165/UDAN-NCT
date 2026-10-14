@@ -31,7 +31,8 @@ revision_experiments/  Unified-protocol experiments added during revision (PyTor
                                                sensitivity (sigma, lambda, depth, batch) / domain-gap
                        - nets.py             : all network variants incl. residual output anchoring
                        - final_eval.py       : unified evaluation (inscribed-FOV-circle protocol)
-                       - tsne_features.py    : feature alignment visualization (Figure 9)
+                       - feature_analysis.py : feature alignment analysis - PCA projection, normalized MMD,
+                                               domain probe (Figure 9)
                        - sart_python.py      : re-projection SART baseline with early stopping
 results/final_table.json   All quantitative results under the unified protocol
 ```
