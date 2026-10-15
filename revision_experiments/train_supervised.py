@@ -29,8 +29,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, r'H:/ZCode/NCT返修/code/Compare_lowdose')
 sys.path.insert(0, r'H:/ZCode/NCT返修/code/lowdose_MMD1')
 
-from common import (PairDataset, XRAY_FULL, XRAY_LOW, evaluate_model, append_json,
-                    wavelet_branch, save_torch, load_torch)
+from common import (PairDataset, XRAY_FULL, XRAY_LOW, NCT_LOW, NCT_REF,
+                    evaluate_model, append_json, wavelet_branch, save_torch, load_torch,
+                    nct_test_pairs)
 from net.DnCNN import DnCNN
 from net.RED_CNN.networks import RED_CNN
 from net.FBPConvNet.model import FBPCONVNet
@@ -59,6 +60,8 @@ def main():
     ap.add_argument('--epochs', type=int, default=100)
     ap.add_argument('--bs', type=int, default=2)
     ap.add_argument('--lr', type=float, default=1e-5)
+    ap.add_argument('--eval_input', default=NCT_LOW)
+    ap.add_argument('--eval_ref', default=NCT_REF)
     ap.add_argument('--seed', type=int, default=2024)
     args = ap.parse_args()
 
@@ -110,7 +113,8 @@ def main():
             optimizer.step()
             total += loss.item()
             count += 1
-        m = evaluate_model(net, device, plain_input=plain_input)
+        eval_pairs = nct_test_pairs(ref_root=args.eval_ref, inp_root=args.eval_input)
+        m = evaluate_model(net, device, plain_input=plain_input, pairs=eval_pairs)
         with open(log_path, 'a', newline='', encoding='utf-8') as f:
             csv.writer(f).writerow([epoch + 1, total / max(count, 1),
                                     m['SSIM_mean'], m['PSNR_mean'], m['RMSE_mean'],
@@ -127,7 +131,7 @@ def main():
     # Final evaluation of the best checkpoint + save output images
     ckpt = load_torch(os.path.join(out_root, 'best.pth'), map_location=device)
     net.load_state_dict(ckpt['state_dict'])
-    final = evaluate_model(net, device, plain_input=plain_input,
+    final = evaluate_model(net, device, plain_input=plain_input, pairs=eval_pairs,
                            save_dir=os.path.join(out_root, 'outputs'))
     record = {'run': run_name, 'best_epoch': ckpt['epoch'], 'final': final}
     append_json(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'runs',

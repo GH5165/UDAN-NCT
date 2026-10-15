@@ -24,14 +24,13 @@ from torch.utils.data import Dataset
 
 WAVENAME = 'bior1.3'
 
-import os
-XRAY_FULL = os.environ.get("UDAN_XRAY_FULL", r"H:/6248R/pycharmProject/pytorch/WT_SR/data/full_dose/test1")
-XRAY_LOW = os.environ.get("UDAN_XRAY_LOW", r"H:/6248R/pycharmProject/pytorch/WT_SR/data/low_dose/test1")
-NCT_REF = os.environ.get("UDAN_NCT_REF", r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views")
-NCT_LOW = os.environ.get("UDAN_NCT_LOW", r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e4")
-NCT_TRAIN_LOW = os.environ.get("UDAN_NCT_TRAIN_LOW", r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw3_noise_1e4")
-NCT_TRAIN_CLEAN = os.environ.get("UDAN_NCT_TRAIN_CLEAN", r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw3")
-NCT_LOW_1E3 = os.environ.get("UDAN_NCT_LOW_1E3", r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e3")
+XRAY_FULL = r"H:/6248R/pycharmProject/pytorch/WT_SR/data/full_dose/test1"
+XRAY_LOW = r"H:/6248R/pycharmProject/pytorch/WT_SR/data/low_dose/test1"
+NCT_REF = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views"
+NCT_LOW = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e4"
+NCT_TRAIN_LOW = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw3_noise_1e4"
+NCT_TRAIN_CLEAN = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw3"
+NCT_LOW_1E3 = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e3"
 
 
 def imread01(path):
