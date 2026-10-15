@@ -181,3 +181,15 @@ class UDANRes(nn.Module):
     def forward(self, x_src, x_tar, LL2=None, LL3=None):
         out, f_src, f_tar = self.base(x_src, x_tar, LL2, LL3)
         return x_src + out, f_src, f_tar
+
+
+class UDANResNoWT(nn.Module):
+    """NoWT variant with residual output anchoring (for the revised ablation table)."""
+
+    def __init__(self, n_channels=1, n_classes=1):
+        super().__init__()
+        self.base = UDANNoWT(n_channels, n_classes)
+
+    def forward(self, x_src, x_tar, LL2=None, LL3=None):
+        out, f_src, f_tar = self.base(x_src, x_tar, LL2, LL3)
+        return x_src + out, f_src, f_tar

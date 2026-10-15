@@ -36,7 +36,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import (PairDataset, TargetDataset, XRAY_FULL, XRAY_LOW,
                     NCT_TRAIN_LOW, NCT_REF, NCT_LOW, evaluate_model,
                     append_json, save_torch, load_torch, wavelet_branch)
-from nets import UDAN, UDANNoWT, DnCNNMMD, REDCNNMMD, UDANRes
+from nets import UDAN, UDANNoWT, DnCNNMMD, REDCNNMMD, UDANRes, UDANResNoWT
 
 
 def mmd2_rbf_rows(X, Y, sigma):
@@ -72,13 +72,15 @@ def build_model(name, mmd_loc):
         return REDCNNMMD()
     if name == 'udan_res':
         return UDANRes()
+    if name == 'udan_res_nowt':
+        return UDANResNoWT()
     raise ValueError(name)
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--model', default='udan',
-                    choices=['udan', 'udan_nowt', 'dncnn_mmd', 'redcnn_mmd', 'udan_res'])
+                    choices=['udan', 'udan_nowt', 'dncnn_mmd', 'redcnn_mmd', 'udan_res', 'udan_res_nowt'])
     ap.add_argument('--name', default=None)
     ap.add_argument('--mmd', default='on', choices=['on', 'off'])
     ap.add_argument('--mmd_loc', default='down4', choices=['down4', 'down3'])
@@ -104,7 +106,7 @@ def main():
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     net = build_model(args.model, args.mmd_loc).to(device)
-    needs_wt = args.model in ('udan', 'udan_nowt')
+    needs_wt = args.model in ('udan', 'udan_nowt', 'udan_res', 'udan_res_nowt')
 
     source_loader = DataLoader(PairDataset(XRAY_LOW, XRAY_FULL),
                                batch_size=args.bs, shuffle=True,
