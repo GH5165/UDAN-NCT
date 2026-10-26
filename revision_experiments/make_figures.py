@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RUNS = os.path.join(HERE, 'runs')
-NCT = r'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e4'
+NCT = ''  # TODO: set local path
 
 
 def load(path):

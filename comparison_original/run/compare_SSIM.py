@@ -14,16 +14,16 @@ from dataset.datasets import ImageDataset
 from myTool.mkdir import mkdir
 from myTool.myNormalization import myNormalization
 
-# label_folder = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_norm"
-label_folder = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views"
+# label_folder = ''
+label_folder = ''  # TODO: set local path
 # netName = "FBPConvNet-ld_ndct"
 # netName = "REDCNN-ld_ndct"
 # netName = "DnCNN-ld_ndct"  #
-# in_folder = fr"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4\results\{netName}_norm"
+# in_folder = f''
 # netName = "SART"  #
-# in_folder = fr"D:\gh\CodeMATLAB\result\SART\SART_raw_200Views_600"
+# in_folder = f''
 netName = "noise2_model3_best41"
-in_folder = fr"D:\gh\pycharmProject\pytorch\lowdose_MMD1\result\{netName}"
+in_folder = f''  # TODO: set local path
 # netName = "self"
 # in_folder = label_folder
 

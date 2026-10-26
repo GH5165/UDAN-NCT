@@ -19,7 +19,7 @@ import torch
 from scipy.ndimage import uniform_filter, sobel
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, r'H:/ZCode/NCT返修/code/lowdose_MMD1')
+sys.path.insert(0, '')  # TODO: set local path
 from common import (imread01, nct_test_pairs, metrics, crop_center,
                     wavelet_branch, save_torch, load_torch,
                     NCT_LOW, NCT_LOW_1E3, NCT_REF)
@@ -146,7 +146,7 @@ def main():
     from net.DnCNN import DnCNN
     from net.RED_CNN.networks import RED_CNN
     from net.FBPConvNet.model import FBPCONVNet
-    sys.path.insert(0, r'H:/ZCode/NCT返修/code/Compare_lowdose')
+    sys.path.insert(0, '')  # TODO: set local path
     for run in ['DnCNN-Xray', 'FBPConvNet-Xray', 'REDCNN-Xray']:
         ck = load_torch(os.path.join(RUNS, run, 'best.pth'), map_location='cpu')
         builder = {'DnCNN-Xray': lambda: DnCNN(channels=1, features=64, num_of_layers=17),

@@ -44,18 +44,18 @@
 # netName = "MDAM-nd_ndct"
 # # data
 # train_loader = DataLoader(
-#     dataset=SourceImageDataset(inputs_root=r'H:\gh\pycharmProject\pytorch\WT_SR\data\full_dose\test1',
-#                                labels_root=r'H:\gh\pycharmProject\pytorch\WT_SR\data\low_dose\test1'),
+#     dataset=SourceImageDataset(inputs_root='',
+#                                labels_root=''),
 #     batch_size=opt.batch_size,
 #     shuffle=True,
 #     num_workers=opt.n_cpu,
 #     pin_memory=True,
 # )
 # test_loader1 = DataLoader(
-#     # dataset=ImageDataset(labels_root=r"H:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views",
-#     #                      inputs_root=r"H:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4"),
-#     dataset=TargetImageDataset(labels_root=r"E:\CodeMATLAB\6248R\CodeMATLAB\result\FDK\FDK_raw_200Views",
-#                                inputs_root=r"E:\CodeMATLAB\6248R\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4"),
+#     # dataset=ImageDataset(labels_root='',
+#     #                      inputs_root=''),
+#     dataset=TargetImageDataset(labels_root='',
+#                                inputs_root=''),
 #     batch_size=opt.batch_size,
 #     shuffle=True,
 #     num_workers=opt.n_cpu,

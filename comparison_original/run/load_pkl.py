@@ -18,12 +18,12 @@ from myTool.myNormalization import myNormalization
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-# in_folder = r"D:\gh\pycharmProject\pytorch\Compare_sparse\data\FDK_raw3_20views"
-# in_folder = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e3_norm"
-# in_folder = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4"
-in_folder = r"F:\neutron_image\ALL"
-# in_folder = r"F:\neutron_image\Results_open"
-# in_folder = r"F:\neutron_image\Results_open_smooth"
+# in_folder = ''
+# in_folder = ''
+# in_folder = ''
+in_folder = ''  # TODO: set local path
+# in_folder = ''
+# in_folder = ''
 # netName = "FBPConvNet-ld_ndct"
 # netName = "REDCNN-ld_ndct"
 netName = "DnCNN-ld_ndct"
@@ -33,9 +33,9 @@ evaluationsPath = "./saved_evaluations"
 
 batch_size = 1
 test_loader = DataLoader(
-    # dataset=ImageDataset(inputs_root=r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e3",
+    # dataset=ImageDataset(inputs_root='',
     dataset=ImageDataset(inputs_root=in_folder,
-                         # labels_root=r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views"),
+                         # labels_root=''),
                          labels_root=in_folder),
     batch_size=batch_size,
     shuffle=True,

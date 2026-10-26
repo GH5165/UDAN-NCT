@@ -71,9 +71,9 @@ class TargetImageDataset(Dataset):
 
 if __name__ == '__main__':
     test_loader_source = DataLoader(
-        # SourceImageDataset(labels_root=r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views",
-        SourceImageDataset(labels_root=r"D:\gh\pycharmProject\pytorch\lowdose_MMD1\data\netout_as_label",
-                           inputs_root=rf"D:\gh\pycharmProject\pytorch\lowdose_MMD1\data\FDK_raw_200Views_noise1e4"),
+        # SourceImageDataset(labels_root='',
+        SourceImageDataset(labels_root='',  # TODO: set local path
+                           inputs_root=rf''),  # TODO: set local path
         batch_size=1,
         shuffle=False,
         drop_last=True,

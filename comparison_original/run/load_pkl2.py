@@ -17,8 +17,8 @@ from myTool.myNormalization import myNormalization
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-# in_folder = r"D:\gh\pycharmProject\pytorch\Compare_sparse\data\FDK_raw3_20views"
-in_folder = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e3_norm"
+# in_folder = ''
+in_folder = ''  # TODO: set local path
 netName = "FBPConvNet-nd_ndct"
 # netName = "REDCNN-nd_ndct"
 # netName = "DnCNN-nd_ndct"
@@ -32,9 +32,9 @@ mkdir(evaluationsPath + f"/{netName}")
 
 batch_size = 1
 test_loader = DataLoader(
-    # dataset=ImageDataset(inputs_root=r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e3",
+    # dataset=ImageDataset(inputs_root='',
     dataset=ImageDataset(inputs_root=in_folder,
-                         labels_root=r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views"),
+                         labels_root=''),  # TODO: set local path
     batch_size=batch_size,
     shuffle=True,
     # num_workers=4

@@ -38,11 +38,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RUNS = os.path.join(HERE, 'runs')
 
 CONDITIONS = {
-    '3e3': r'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise3e3',
-    '1e3': r'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e3',
-    '8e2': r'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise8e2',
-    '7e2': r'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise7e2',
-    '3e2': r'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise3e2',
+    '3e3': '',  # TODO: set local path
+    '1e3': '',  # TODO: set local path
+    '8e2': '',  # TODO: set local path
+    '7e2': '',  # TODO: set local path
+    '3e2': '',  # TODO: set local path
 }
 MODELS = {
     'noMMD': ('UDANRes-noMMD', 'best.pth'),        # X-ray only, before adaptation

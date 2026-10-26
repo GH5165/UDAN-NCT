@@ -42,16 +42,16 @@ myNet = RED_CNN(out_ch=96)
 netName = "REDCNN-ld_ndct"
 # data
 train_loader = DataLoader(
-    dataset=ImageDataset(inputs_root=r'D:\gh\pycharmProject\pytorch\WT_SR\data\full_dose\test1',
-                         labels_root=r'D:\gh\pycharmProject\pytorch\WT_SR\data\low_dose\test1'),
+    dataset=ImageDataset(inputs_root='',  # TODO: set NCT low-flux training inputs (e.g. FDK_raw3_noise_1e3)
+                     labels_root=''),  # TODO: set NCT normal-flux training labels (e.g. FDK_raw3)
     batch_size=opt.batch_size,
     shuffle=True,
     num_workers=opt.n_cpu,
     pin_memory=True,
 )
 test_loader1 = DataLoader(
-    dataset=ImageDataset(labels_root=r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views",
-                         inputs_root=r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4"),
+    dataset=ImageDataset(labels_root='',  # TODO: set local path
+                         inputs_root=''),  # TODO: set local path
     batch_size=opt.batch_size,
     shuffle=True,
     num_workers=opt.n_cpu,

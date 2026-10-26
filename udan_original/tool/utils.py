@@ -7,7 +7,7 @@ from torch import mm
 def norm(img, vgg=False):
     if vgg:
         # normalize for pre-trained vgg model
-        # https://github.com/pytorch/examples/blob/42e5b996718797e45c46a25c55b031e6768f8440/imagenet/main.py#L89-L101
+        # http<hidden-local-path>
         transform = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                          std=[0.229, 0.224, 0.225])
     else:

@@ -1,5 +1,5 @@
 %% REFERENCE
-% https://en.wikipedia.org/wiki/Algebraic_reconstruction_technique
+% http<hidden-local-path>
 
 %% ART Equation
 % x^(k+1) = x^k + lambda * AT(b - A(x))/ATA
@@ -20,7 +20,7 @@ AT      = @(y) iradon(y, THETA, 'none', N)/(pi/(2*length(THETA)));
 AINV    = @(y) iradon(y, THETA, N);
 
 %% DATA GENERATION
-folder_path = 'D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4';
+folder_path = '';  % TODO: set local path
 zList = dir(fullfile(folder_path,'*.png'));
 mkdir(folder_path,"ART");
 for i = 1:length(zList)

@@ -3,8 +3,8 @@
 
 Protocol (documented in the revised manuscript):
   - All images loaded as grayscale float in [0, 1] (PNG/255).
-  - Reference: H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views (normal-flux FDK, 31 slices)
-  - Input:     H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e4 (low-flux, 32 slices)
+  - Reference: <hidden-local-path> (normal-flux FDK, 31 slices)
+  - Input:     <hidden-local-path> (low-flux, 32 slices)
   - Pairs matched by filename; slices without a reference are skipped.
   - Metrics: SSIM(data_range=1), PSNR(data_range=1), RMSE = sqrt(MSE), mean +/- SD over slices.
 """
@@ -24,13 +24,13 @@ from torch.utils.data import Dataset
 
 WAVENAME = 'bior1.3'
 
-XRAY_FULL = r"H:/6248R/pycharmProject/pytorch/WT_SR/data/full_dose/test1"
-XRAY_LOW = r"H:/6248R/pycharmProject/pytorch/WT_SR/data/low_dose/test1"
-NCT_REF = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views"
-NCT_LOW = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e4"
-NCT_TRAIN_LOW = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw3_noise_1e4"
-NCT_TRAIN_CLEAN = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw3"
-NCT_LOW_1E3 = r"H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e3"
+XRAY_FULL = ''  # TODO: set local path
+XRAY_LOW = ''  # TODO: set local path
+NCT_REF = ''  # TODO: set local path
+NCT_LOW = ''  # TODO: set local path
+NCT_TRAIN_LOW = ''  # TODO: set local path
+NCT_TRAIN_CLEAN = ''  # TODO: set local path
+NCT_LOW_1E3 = ''  # TODO: set local path
 
 
 def imread01(path):

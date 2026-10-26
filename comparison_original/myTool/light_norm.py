@@ -49,8 +49,8 @@ def get_lightness(src):
 
 
 if __name__ == '__main__':
-    # result = cv2.imread(r'D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e3_norm\results\FBPConvNet-nd_ndct\31.png')
-    # label = cv2.imread(r'D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_norm\31.png')
+    # result = cv2.imread('')
+    # label = cv2.imread('')
     # result = aug(result)
     # label = aug(label)
     # result = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
@@ -66,10 +66,10 @@ if __name__ == '__main__':
     #
     # print(s, p, r)
 
-    root_path = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4\results\FBPConvNet-nd_ndct_norm"
-    root_path = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4\results\DnCNN-ld_ndct_norm"
-    root_path = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e4\results\REDCNN-ld_ndct_norm"
-    # root_path = r"D:\gh\CodeMATLAB\result\SART\SART_raw_100Views_norm"
+    root_path = ''  # TODO: set local path
+    root_path = ''  # TODO: set local path
+    root_path = ''  # TODO: set local path
+    # root_path = ''
     for file in os.listdir(root_path):
         in_path = root_path + f"\\{file}"
         # img = cv2.imread(in_path, cv2.IMREAD_GRAYSCALE)

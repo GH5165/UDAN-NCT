@@ -12,10 +12,10 @@ from PIL import Image
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from make_figures_final import load_panel, compose, OUT, SLICES
 
-ROOT = r'H:/ZCode/NCT返修'
+ROOT = ''  # TODO: set local path
 METHODS = [
-    ('reference', 'file', 'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views/{s}'),
-    ('input', 'file', 'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e3/{s}'),
+    ('reference', 'file', ''),  # TODO: set local path
+    ('input', 'file', ''),  # TODO: set local path
     ('SART', 'outputs', 'SART1e3'),
     ('FBPConvNet_direct', 'outputs_1e3', 'FBPConvNet-Xray'),
     ('DnCNN_MMD', 'outputs_1e3', 'DnCNN-MMD1e3'),

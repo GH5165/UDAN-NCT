@@ -14,6 +14,11 @@ results/               Final result tables and feature-analysis statistics
 
 ## Revised experimental protocol
 
+The comparison-network training loaders in `comparison_original/` use paired
+**NCT low-flux inputs and normal-flux labels**. All local absolute paths in
+every script have been replaced by empty strings with `TODO: set local path`
+comments; set these paths to your own data layout before running.
+
 - Main operating point: projection-domain Poisson + electronic noise at
   **I0 = 10³** counts per detector element, followed by FDK reconstruction.
 - Larger-domain-gap study: two additional harsher conditions,

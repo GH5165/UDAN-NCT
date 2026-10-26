@@ -36,7 +36,7 @@ def compute_PSNR(img1, img2, data_range):
 
 
 def compute_SSIM(img1, img2, data_range, window_size=11, channel=1, size_average=True):
-    # referred from https://github.com/Po-Hsun-Su/pytorch-ssim
+    # referred from http<hidden-local-path>
     if len(img1.size()) == 2:
         shape_ = img1.shape[-1]
         img1 = img1.view(1,1,shape_ ,shape_ )

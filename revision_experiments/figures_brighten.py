@@ -8,8 +8,8 @@ import os
 import numpy as np
 from PIL import Image
 
-SRC = r'H:/ZCode/NCT返修/figures'
-DST = r'H:/ZCode/NCT返修/code/lowdose_MMD1/qoder_fig'
+SRC = ''  # TODO: set local path
+DST = ''  # TODO: set local path
 os.makedirs(DST, exist_ok=True)
 
 

@@ -23,13 +23,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, r'H:/ZCode/NCT返修/code/lowdose_MMD1')
+sys.path.insert(0, '')  # TODO: set local path
 from common import imread01, XRAY_LOW, wavelet_branch, load_torch
 from nets import UDANRes
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RUNS = os.path.join(HERE, 'runs')
-NCT_1E3 = r'H:/6248R/CodeMATLAB/result/FDK/FDK_raw_200Views_noise1e3'
+NCT_1E3 = ''  # TODO: set local path
 UDAN_RUN = os.environ.get('UDAN_RUN', 'U1c')
 NOMMD_RUN = 'UDANRes-noMMD'
 N_PER = 30

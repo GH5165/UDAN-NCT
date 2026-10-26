@@ -16,10 +16,10 @@ from tensorboardX import SummaryWriter
 
 warnings.filterwarnings('ignore')
 # os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-# write = SummaryWriter(r"D:\neutron imaging\residual imaging\code\python\111")
+# write = SummaryWriter('')
 
-os.makedirs(r"D:\neutron imaging\limited_img\Result\head_FBPConVnet", exist_ok=True)
-os.makedirs(r"D:\neutron imaging\limited_img\Result\head_FBPConVnet/saved_models", exist_ok=True)
+os.makedirs('', exist_ok=True)  # TODO: set local path
+os.makedirs('', exist_ok=True)  # TODO: set local path
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -68,7 +68,7 @@ if cuda:
 if opt.epoch != 0:
     # Load pretrained models
     net = torch.load(
-        r"D:\neutron imaging\limited_img\Result\head_FBPConVnet/saved_models/FBPConvNet_%d.pkl" % opt.epoch)
+        '' % opt.epoch)  # TODO: set local path
 
 else:
     # Initialize weights
@@ -76,20 +76,16 @@ else:
 
 
 train_loader = DataLoader(
-    ImageDataset(labels_root=r"D:\neutron imaging\limited_img\data\head\train\%s"
-                             % opt.train_label_dataset,
-                 inputs_root=r"D:\neutron imaging\limited_img\data\head\train\%s"
-                             % opt.train_inputs_dataset),
+    ImageDataset(labels_root='',  # TODO: set NCT normal-flux training labels (e.g. FDK_raw3)
+                 inputs_root=''),  # TODO: set NCT low-flux training inputs (e.g. FDK_raw3_noise_1e3)
     batch_size=opt.batch_size,
     shuffle=True,
     drop_last=True,
     num_workers=opt.n_cpu
 )
 test_loader = DataLoader(
-    ImageDataset(labels_root=r"D:\neutron imaging\limited_img\data\head\test\%s"
-                             % opt.test_label_dataset,
-                 inputs_root=r"D:\neutron imaging\limited_img\data\head\test\%s"
-                             % opt.test_inputs_dataset),
+    ImageDataset(labels_root='',  # TODO: set NCT normal-flux test labels (e.g. FDK_raw_200Views)
+                 inputs_root=''),  # TODO: set NCT low-flux test inputs (e.g. FDK_raw_200Views_noise1e3)
     batch_size=1,
     shuffle=False,
     drop_last=True,
@@ -132,7 +128,7 @@ def train(epoch):
 
         # print("|Epoch %d/%d| |Batch %d/%d| |G_loss: %f|"
         #       % (epoch+1, opt.n_epochs, i+1, len(train_loader), g_pixel.item()))
-        with open(r"D:\neutron imaging\limited_img\Result\head_FBPConVnet/iteration_loss_0.375.txt", "a") as q:
+        with open('', "a") as q:  # TODO: set local path
             q.write("|Epoch %d/%d| |Batch %d/%d| |G_pixel: %f|\r\n"
                     % (epoch+1, opt.n_epochs, i+1, len(train_loader), g_pixel.item()))
             q.close()
@@ -141,7 +137,7 @@ def train(epoch):
 
     print("|Epoch %d/%d| |totla_G_loss: %f|"
           % (epoch+1, opt.n_epochs, train_g_loss/len(train_loader)))
-    with open(r"D:\neutron imaging\limited_img\Result\head_FBPConVnet/total_loss_0.375.txt", "a") as p:
+    with open('', "a") as p:  # TODO: set local path
         p.write("|Epoch %d/%d| |totla_G_loss: %f|\r\n"
                 % (epoch+1, opt.n_epochs, train_g_loss/len(train_loader)))
         p.close()
@@ -177,7 +173,7 @@ def test():
     print('|Epoch %d/%d| |Average SSIM: %f | |Average PSNR: %f| |Average RMSE: %f |'
           % ((epoch+1), opt.n_epochs, total_s/len(test_loader), total_p/len(test_loader),
                    total_r/len(test_loader)))
-    with open(r"D:\neutron imaging\limited_img\Result\head_FBPConVnet/test_parameters_0.375.txt", "a") as f:
+    with open('', "a") as f:  # TODO: set local path
         f.write("|Epoch %d/%d| |Average SSIM: %f | |Average PSNR: %f| |Average RMSE: %f |\r\n"
                 % ((epoch+1), opt.n_epochs, total_s/len(test_loader), total_p/len(test_loader),
                    total_r/len(test_loader)))
@@ -189,7 +185,7 @@ if __name__ == '__main__':
     for epoch in range(opt.n_epochs):
         train(epoch)
         torch.save(net,
-                   r"D:\neutron imaging\limited_img\Result\head_FBPConVnet\saved_models/FBPConvNet_%d.pkl" % (epoch + 1))
+                   '' % (epoch + 1))  # TODO: set local path
         epoch_s, epoch_p, epoch_r = test()
 
 

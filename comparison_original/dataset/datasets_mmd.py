@@ -81,8 +81,8 @@ class TargetImageDataset(Dataset):
 
 if __name__ == '__main__':
     dataset = SourceImageDataset(
-        labels_root=r"D:\gh\pycharmProject\pytorch\lowdoes_MMD\data\Cat2_real_norm_noise\train\labels_raw",
-        inputs_root=r"D:\gh\pycharmProject\pytorch\lowdoes_MMD\data\Cat2_real_norm_noise\train\labels")
+        labels_root='',  # TODO: set local path
+        inputs_root='')  # TODO: set local path
     for low, l2, l3, normal, n2, n3 in dataset:
         print(low.shape)
         print(l2.shape)

@@ -1,10 +1,10 @@
 clc;clear;
-maindir = 'D:\gh\CodeMATLAB\data\gluedbox\ob\';
+maindir = '';  % TODO: set local path
 dir_folder = dir(fullfile(maindir, '*.raw'));
 names_file = {dir_folder.name};
 
 size_name = size(names_file);
-save_dir = 'D:\gh\CodeMATLAB\data\gluedbox\ob\proj\';
+save_dir = '';  % TODO: set local path
 q = 1;
 M = 512;
 N = 512;

@@ -1,5 +1,5 @@
 %% REFERENCE
-% https://en.wikipedia.org/wiki/Algebraic_reconstruction_technique
+% http<hidden-local-path>
 
 %% ART Equation
 % x^(k+1) = x^k + lambda * AT(b - A(x))/ATA

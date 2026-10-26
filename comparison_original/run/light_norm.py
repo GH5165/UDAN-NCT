@@ -43,9 +43,9 @@ def get_lightness(src):
 
 if __name__ == '__main__':
 
-    root_path = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e3\results\DnCNN-ld_ndct_norm"
-    # root_path = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e3\results\REDCNN-ld_ndct_norm"
-    # root_path = r"D:\gh\CodeMATLAB\result\FDK\FDK_raw_200Views_noise1e3\results\FBPConvNet-ld_ndct_norm"
+    root_path = ''  # TODO: set local path
+    # root_path = ''
+    # root_path = ''
 
     for file in os.listdir(root_path):
         if file.endswith(".png"):

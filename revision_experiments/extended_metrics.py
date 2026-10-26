@@ -19,7 +19,7 @@ import torch
 from scipy.ndimage import uniform_filter, sobel
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, r'H:/ZCode/NCT返修/code/lowdose_MMD1')  # for pickled model3/model6
+sys.path.insert(0, '')  # for pickled model3/model6  # TODO: set local path
 from common import imread01, nct_test_pairs, metrics, NCT_REF, NCT_LOW, wavelet_branch
 
 
@@ -68,7 +68,7 @@ def main():
                            pairs, run, results)
 
     # original UDAN best41 checkpoint (unified protocol inference)
-    ckpt_path = r'H:/6248R/pycharmProject/pytorch/lowdose_MMD1/saved_models/noise2_model3_best41.pkl'
+    ckpt_path = ''  # TODO: set local path
     if os.path.exists(ckpt_path):
         with open(ckpt_path, 'rb') as f:
             net = torch.load(f, map_location='cuda')

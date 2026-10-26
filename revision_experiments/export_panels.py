@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Export every individual figure panel (single images, no composition) to
-H:/ZCode/NCT返修/figures for the author to assemble.
+<hidden-local-path> for the author to assemble.
 
 Naming: <fig>_<panel>_<method>_<slice>.png  (+ _roi versions for Figure 7)
 """
@@ -14,8 +14,8 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RUNS = os.path.join(HERE, 'runs')
-FDK = 'H:/6248R/CodeMATLAB/result/FDK'
-OUT = r'H:/ZCode/NCT返修/figures'
+FDK = ''  # TODO: set local path
+OUT = ''  # TODO: set local path
 SLICES = {'simple': '15.png', 'complex': '25.png'}
 ROI = (176, 336, 176, 336)  # y0,y1,x0,x1
 

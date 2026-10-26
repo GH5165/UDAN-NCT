@@ -31,7 +31,7 @@ def save_dataset(args):
 
 
 def load_scan(path):
-    # referred from https://www.kaggle.com/gzuidhof/full-preprocessing-tutorial
+    # referred from http<hidden-local-path>
     slices = [pydicom.read_file(os.path.join(path, s)) for s in os.listdir(path)]
     slices.sort(key=lambda x: float(x.ImagePositionPatient[2]))
     try:
@@ -44,7 +44,7 @@ def load_scan(path):
 
 
 def get_pixels_hu(slices):
-    # referred from https://www.kaggle.com/gzuidhof/full-preprocessing-tutorial
+    # referred from http<hidden-local-path>
     image = np.stack([s.pixel_array for s in slices])
     image = image.astype(np.int16)
     image[image == -2000] = 0
@@ -64,7 +64,7 @@ def normalize_(image, MIN_B=-1024.0, MAX_B=3072.0):
 
 
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill=' '):
-    # referred from https://gist.github.com/snakers4/91fa21b9dda9d055a02ecd23f24fbc3d
+    # referred from http<hidden-local-path>
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
     bar = fill * filledLength + '=' * (length - filledLength)

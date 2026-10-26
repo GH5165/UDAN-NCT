@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Redraw manuscript figures with simple=20.png / complex=31.png.
 - brightness normalization (light_norm recipe) for every panel
-- subfigures saved to H:/ZCode/NCT返修/qoder_fig
+- subfigures saved to <hidden-local-path>
 - composites (with (a),(b),... labels) saved to qoder_fig/composites
 - Figure 6 panels carry the red ROI box from pic_deal.py (i=220,j=150,h=120,w=220);
   Figure 7 = zoomed crops of the same ROI.
@@ -12,8 +12,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RUNS = os.path.join(HERE, 'runs')
-FDK = 'H:/6248R/CodeMATLAB/result/FDK'
-OUT = r'H:/ZCode/NCT返修/qoder_fig'
+FDK = ''  # TODO: set local path
+OUT = ''  # TODO: set local path
 COMP = os.path.join(OUT, 'composites')
 os.makedirs(COMP, exist_ok=True)
 SLICES = {'simple': '20.png', 'complex': '31.png'}

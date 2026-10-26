@@ -14,7 +14,7 @@ from skimage.metrics import peak_signal_noise_ratio as psnr
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import imread01
 
-FDK = r'H:/6248R/CodeMATLAB/result/FDK'
+FDK = ''  # TODO: set local path
 REF = os.path.join(FDK, 'FDK_raw_200Views')
 LEVELS = ['1e4', '3e3', '2e3', '1e3', '9e2', '8e2', '7e2', '6e2', '5e2', '3e2']
 

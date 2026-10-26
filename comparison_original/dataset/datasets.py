@@ -32,8 +32,8 @@ class ImageDataset(Dataset):
 
 if __name__ == '__main__':
     a = ImageDataset(
-        labels_root=r"D:\gh\pycharmProject\pytorch\WT_SR\data\full_dose\train",
-        inputs_root=r"D:\gh\pycharmProject\pytorch\WT_SR\data\low_dose\train")
+        labels_root='',  # TODO: set local path
+        inputs_root='')  # TODO: set local path
     for inputs, labels, name in a:
         print(inputs)
         print(labels)

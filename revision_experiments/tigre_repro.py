@@ -21,8 +21,8 @@ import numpy as np
 from PIL import Image
 import torch
 
-RAW = r'H:/6248R/data/gluedbox/raw/proj'
-FDK = r'H:/6248R/CodeMATLAB/result/FDK'
+RAW = ''  # TODO: set local path
+FDK = ''  # TODO: set local path
 NANG = 200
 ANGLES = np.linspace(0.0, np.pi, NANG)          # MATLAB linspace(0,1*pi,200)
 DSD, DSO = 600.3, 600.2
