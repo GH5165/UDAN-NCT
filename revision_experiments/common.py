@@ -100,6 +100,16 @@ def metrics(ref, img):
 
 CROP_MARGIN = 32  # unified protocol v2: central 448x448 crop (removes FDK periphery errors)
 
+_WT_CACHE = {}
+
+
+def wavelet_branch_cached(path, img):
+    """wavelet_branch with an on-disk-path cache (test sets are fixed across epochs)."""
+    key = str(path)
+    if key not in _WT_CACHE:
+        _WT_CACHE[key] = wavelet_branch(img)
+    return _WT_CACHE[key]
+
 
 def crop_center(a, margin=CROP_MARGIN):
     return a[margin:-margin, margin:-margin] if margin > 0 else a
@@ -133,7 +143,7 @@ def evaluate_model(net, device='cuda', plain_input=True, pairs=None, save_dir=No
             if plain_input:
                 out = net(x)
             else:
-                LL2, LL3 = wavelet_branch(low)
+                LL2, LL3 = wavelet_branch_cached(ip, low)
                 l2 = torch.from_numpy(LL2).float()[None, None].to(device)
                 l3 = torch.from_numpy(LL3).float()[None, None].to(device)
                 out, _, _ = net(x, x, l2, l3)

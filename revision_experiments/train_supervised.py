@@ -63,6 +63,13 @@ def main():
     ap.add_argument('--eval_input', default=NCT_LOW)
     ap.add_argument('--eval_ref', default=NCT_REF)
     ap.add_argument('--seed', type=int, default=2024)
+    ap.add_argument('--select_by', default='nct', choices=['nct', 'srcval'],
+                    help="checkpoint selection rule: 'nct' = target-test SSIM (original "
+                         "protocol, needs target labels); 'srcval' = held-out source-domain "
+                         "validation SSIM (label-free on target; the honest direct-transfer "
+                         "protocol)")
+    ap.add_argument('--val_frac', type=float, default=0.15,
+                    help='fraction of source pairs held out for srcval selection')
     args = ap.parse_args()
 
     run_name = args.name or f'{args.net}-Xray'
@@ -79,9 +86,48 @@ def main():
     net = build_net(args.net).to(device)
     plain_input = args.net != 'udan_sup'
 
+    full_pairs = PairDataset(args.train_inputs, args.train_labels)
+    val_dataset = None
+    if args.select_by == 'srcval':
+        n = len(full_pairs)
+        n_val = max(1, int(round(n * args.val_frac)))
+        idx = list(range(n))
+        import numpy as _np
+        rng = _np.random.RandomState(args.seed)
+        rng.shuffle(idx)
+        val_idx = set(idx[:n_val])
+        from torch.utils.data import Subset
+        train_dataset = Subset(full_pairs, [i for i in idx[n_val:]])
+        val_dataset = Subset(full_pairs, sorted(val_idx))
+        print(f'[split] train={len(train_dataset)} src-val={len(val_dataset)}')
+    else:
+        train_dataset = full_pairs
+
     train_loader = DataLoader(
-        PairDataset(args.train_inputs, args.train_labels),
+        train_dataset,
         batch_size=args.bs, shuffle=True, drop_last=True, num_workers=0)
+
+    def eval_srcval():
+        """SSIM of the network on held-out source-domain pairs."""
+        from common import metrics as _metrics
+        vals = []
+        net.eval()
+        with torch.no_grad():
+            for low, full, _ in DataLoader(val_dataset, batch_size=1):
+                x = low[:, None].to(device)
+                if plain_input:
+                    out = net(x)
+                else:
+                    import numpy as _np2
+                    l2 = torch.stack([torch.from_numpy(wavelet_branch(xi)[0]).float()
+                                      for xi in low.numpy()]).unsqueeze(1).to(device)
+                    l3 = torch.stack([torch.from_numpy(wavelet_branch(xi)[1]).float()
+                                      for xi in low.numpy()]).unsqueeze(1).to(device)
+                    out = net(x, x, l2, l3)[0]
+                o = out.squeeze().cpu().numpy().astype(np.float64)
+                vals.append(_metrics(full.squeeze().numpy(), np.clip(o, 0, 1))[0])
+        net.train()
+        return float(sum(vals) / len(vals))
 
     loss_fn = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(net.parameters(), lr=args.lr,
@@ -92,6 +138,7 @@ def main():
         csv.writer(f).writerow(['epoch', 'train_mse', 'SSIM', 'PSNR', 'RMSE', 'seconds'])
 
     best = {'SSIM': -1.0}
+    eval_pairs = nct_test_pairs(ref_root=args.eval_ref, inp_root=args.eval_input)
     t0 = time.time()
     for epoch in range(args.epochs):
         net.train()
@@ -113,14 +160,17 @@ def main():
             optimizer.step()
             total += loss.item()
             count += 1
-        eval_pairs = nct_test_pairs(ref_root=args.eval_ref, inp_root=args.eval_input)
-        m = evaluate_model(net, device, plain_input=plain_input, pairs=eval_pairs)
+        if args.select_by == 'srcval':
+            sel_ssim = eval_srcval()
+            m = {'SSIM_mean': sel_ssim, 'PSNR_mean': float('nan'), 'RMSE_mean': float('nan')}
+        else:
+            m = evaluate_model(net, device, plain_input=plain_input, pairs=eval_pairs)
         with open(log_path, 'a', newline='', encoding='utf-8') as f:
             csv.writer(f).writerow([epoch + 1, total / max(count, 1),
                                     m['SSIM_mean'], m['PSNR_mean'], m['RMSE_mean'],
                                     round(time.time() - t0, 1)])
         print(f"[{run_name}] epoch {epoch + 1}/{args.epochs} mse={total / max(count, 1):.5f} "
-              f"SSIM={m['SSIM_mean']:.4f} PSNR={m['PSNR_mean']:.2f} RMSE={m['RMSE_mean']:.4f}",
+              f"SSIM={m['SSIM_mean']:.4f} (select_by={args.select_by})",
               flush=True)
         if m['SSIM_mean'] > best['SSIM']:
             best = {'SSIM': m['SSIM_mean'], 'epoch': epoch + 1, **m}

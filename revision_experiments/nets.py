@@ -27,6 +27,7 @@ from unet_parts import DnCNN as WT_DnCNN  # 3-layer, non-residual (WT branch)  #
 sys.path.insert(0, r'H:/ZCode/NCT返修/code/Compare_lowdose')
 from net.RED_CNN.networks import RED_CNN  # noqa: E402
 from net.DnCNN import DnCNN as PlainDnCNN  # 17-layer residual denoiser  # noqa: E402
+from net.FBPConvNet.model import FBPCONVNet  # noqa: E402
 
 
 class UDAN(nn.Module):
@@ -164,6 +165,33 @@ class REDCNNMMD(nn.Module):
         out_src = self._decode(b_src, r2_src, x_src)
         _, b_tar = self._encode(x_tar)
         return out_src, self.pool(b_src), self.pool(b_tar)
+
+
+class FBPConvNetMMD(nn.Module):
+    """FBPConvNet (residual UNet) + MMD on the bottleneck features, pooled to 32x32."""
+
+    def __init__(self):
+        super().__init__()
+        self.base = FBPCONVNet()
+        self.pool = nn.AdaptiveAvgPool2d((32, 32))
+
+    def _fwd(self, x):
+        b = self.base
+        o1 = b.block_1_1(x)
+        o2 = b.block_2_1(o1)
+        o3 = b.block_3_1(o2)
+        o4 = b.block_4_1(o3)
+        o5 = b.block_5(o4)
+        r = b.block_4_2(torch.cat((o4, o5), dim=1))
+        r = b.block_3_2(torch.cat((o3, r), dim=1))
+        r = b.block_2_2(torch.cat((o2, r), dim=1))
+        r = b.block_1_2(torch.cat((o1, r), dim=1))
+        return r + x, o5
+
+    def forward(self, x_src, x_tar, LL2=None, LL3=None):
+        out, b_src = self._fwd(x_src)
+        _, b_tar = self._fwd(x_tar)
+        return out, self.pool(b_src), self.pool(b_tar)
 
 
 class UDANRes(nn.Module):
