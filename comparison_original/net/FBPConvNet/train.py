@@ -18,8 +18,8 @@ warnings.filterwarnings('ignore')
 # os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 # write = SummaryWriter('')
 
-os.makedirs('', exist_ok=True)  # TODO: set local path
-os.makedirs('', exist_ok=True)  # TODO: set local path
+os.makedirs('', exist_ok=True)  #
+os.makedirs('', exist_ok=True)  #
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -68,7 +68,7 @@ if cuda:
 if opt.epoch != 0:
     # Load pretrained models
     net = torch.load(
-        '' % opt.epoch)  # TODO: set local path
+        '' % opt.epoch)  #
 
 else:
     # Initialize weights
@@ -128,7 +128,7 @@ def train(epoch):
 
         # print("|Epoch %d/%d| |Batch %d/%d| |G_loss: %f|"
         #       % (epoch+1, opt.n_epochs, i+1, len(train_loader), g_pixel.item()))
-        with open('', "a") as q:  # TODO: set local path
+        with open('', "a") as q:  #
             q.write("|Epoch %d/%d| |Batch %d/%d| |G_pixel: %f|\r\n"
                     % (epoch+1, opt.n_epochs, i+1, len(train_loader), g_pixel.item()))
             q.close()
@@ -137,7 +137,7 @@ def train(epoch):
 
     print("|Epoch %d/%d| |totla_G_loss: %f|"
           % (epoch+1, opt.n_epochs, train_g_loss/len(train_loader)))
-    with open('', "a") as p:  # TODO: set local path
+    with open('', "a") as p:  #
         p.write("|Epoch %d/%d| |totla_G_loss: %f|\r\n"
                 % (epoch+1, opt.n_epochs, train_g_loss/len(train_loader)))
         p.close()
@@ -173,7 +173,7 @@ def test():
     print('|Epoch %d/%d| |Average SSIM: %f | |Average PSNR: %f| |Average RMSE: %f |'
           % ((epoch+1), opt.n_epochs, total_s/len(test_loader), total_p/len(test_loader),
                    total_r/len(test_loader)))
-    with open('', "a") as f:  # TODO: set local path
+    with open('', "a") as f:  #
         f.write("|Epoch %d/%d| |Average SSIM: %f | |Average PSNR: %f| |Average RMSE: %f |\r\n"
                 % ((epoch+1), opt.n_epochs, total_s/len(test_loader), total_p/len(test_loader),
                    total_r/len(test_loader)))
@@ -185,7 +185,7 @@ if __name__ == '__main__':
     for epoch in range(opt.n_epochs):
         train(epoch)
         torch.save(net,
-                   '' % (epoch + 1))  # TODO: set local path
+                   '' % (epoch + 1))  #
         epoch_s, epoch_p, epoch_r = test()
 
 

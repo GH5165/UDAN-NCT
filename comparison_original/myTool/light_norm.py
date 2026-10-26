@@ -66,9 +66,9 @@ if __name__ == '__main__':
     #
     # print(s, p, r)
 
-    root_path = ''  # TODO: set local path
-    root_path = ''  # TODO: set local path
-    root_path = ''  # TODO: set local path
+    root_path = ''  #
+    root_path = ''  #
+    root_path = ''  #
     # root_path = ''
     for file in os.listdir(root_path):
         in_path = root_path + f"\\{file}"

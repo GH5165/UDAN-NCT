@@ -38,11 +38,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RUNS = os.path.join(HERE, 'runs')
 
 CONDITIONS = {
-    '3e3': '',  # TODO: set local path
-    '1e3': '',  # TODO: set local path
-    '8e2': '',  # TODO: set local path
-    '7e2': '',  # TODO: set local path
-    '3e2': '',  # TODO: set local path
+    '3e3': '',  #
+    '1e3': '',  #
+    '8e2': '',  #
+    '7e2': '',  #
+    '3e2': '',  #
 }
 MODELS = {
     'noMMD': ('UDANRes-noMMD', 'best.pth'),        # X-ray only, before adaptation
@@ -113,7 +113,7 @@ def lowlevel_stats(paths):
         lap_var.append(float(lap.var()))
         small.append(F.interpolate(t, size=(64, 64), mode='area')
                      .numpy().ravel())
-    return np.asarray(small), float(np.mean(lap_var)), float(np.mean(means)), \
+    return np.asarray(small), float(np.mean(lap_var)), float(np.mean(means)),\
         float(np.mean(stds))
 
 

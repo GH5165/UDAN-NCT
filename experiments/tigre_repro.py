@@ -8,8 +8,8 @@
   parallel backprojection: img(x,y) = sum_a p_f[v(z), u(x,y;a), a]
   (cosine DSD weight omitted: max deviation 0.09% at this geometry)
 
---verify : reproduce clean test recon and I0=1e3 stats vs existing TIGRE data
---gen    : generate the new flux level (train z=122 + test z=32 folders)
+--verify : verify the clean test reconstruction against reference data
+--gen    : generate a flux-level dataset (train z=122 + test z=32 folders)
 """
 import os
 import sys
@@ -21,8 +21,8 @@ import numpy as np
 from PIL import Image
 import torch
 
-RAW = ''  # TODO: set local path
-FDK = ''  # TODO: set local path
+RAW = ''  #
+FDK = ''  #
 NANG = 200
 ANGLES = np.linspace(0.0, np.pi, NANG)          # MATLAB linspace(0,1*pi,200)
 DSD, DSO = 600.3, 600.2

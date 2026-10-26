@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Unified data loading & evaluation protocol for the NCT revision experiments.
+"""Unified data loading and evaluation protocol for the NCT experiments.
 
-Protocol (documented in the revised manuscript):
+Evaluation protocol:
   - All images loaded as grayscale float in [0, 1] (PNG/255).
-  - Reference: <hidden-local-path> (normal-flux FDK, 31 slices)
-  - Input:     <hidden-local-path> (low-flux, 32 slices)
+  - Reference: normal-flux FDK reconstructions
+  - Input:     low-flux FDK reconstructions
   - Pairs matched by filename; slices without a reference are skipped.
   - Metrics: SSIM(data_range=1), PSNR(data_range=1), RMSE = sqrt(MSE), mean +/- SD over slices.
 """
@@ -24,13 +24,13 @@ from torch.utils.data import Dataset
 
 WAVENAME = 'bior1.3'
 
-XRAY_FULL = ''  # TODO: set local path
-XRAY_LOW = ''  # TODO: set local path
-NCT_REF = ''  # TODO: set local path
-NCT_LOW = ''  # TODO: set local path
-NCT_TRAIN_LOW = ''  # TODO: set local path
-NCT_TRAIN_CLEAN = ''  # TODO: set local path
-NCT_LOW_1E3 = ''  # TODO: set local path
+XRAY_FULL = ''  #
+XRAY_LOW = ''  #
+NCT_REF = ''  #
+NCT_LOW = ''  #
+NCT_TRAIN_LOW = ''  #
+NCT_TRAIN_CLEAN = ''  #
+NCT_LOW_1E3 = ''  #
 
 
 def imread01(path):

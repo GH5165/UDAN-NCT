@@ -32,8 +32,8 @@ class ImageDataset(Dataset):
 
 if __name__ == '__main__':
     a = ImageDataset(
-        labels_root='',  # TODO: set local path
-        inputs_root='')  # TODO: set local path
+        labels_root='',  #
+        inputs_root='')  #
     for inputs, labels, name in a:
         print(inputs)
         print(labels)

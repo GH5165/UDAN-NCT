@@ -72,8 +72,8 @@ class TargetImageDataset(Dataset):
 if __name__ == '__main__':
     test_loader_source = DataLoader(
         # SourceImageDataset(labels_root='',
-        SourceImageDataset(labels_root='',  # TODO: set local path
-                           inputs_root=rf''),  # TODO: set local path
+        SourceImageDataset(labels_root='',  #
+                           inputs_root=rf''),  #
         batch_size=1,
         shuffle=False,
         drop_last=True,

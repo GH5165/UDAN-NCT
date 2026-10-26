@@ -51,8 +51,8 @@ train_loader = DataLoader(
     pin_memory=True,
 )
 test_loader1 = DataLoader(
-    dataset=ImageDataset(labels_root='',  # TODO: set local path
-                         inputs_root=''),  # TODO: set local path
+    dataset=ImageDataset(labels_root='',  #
+                         inputs_root=''),  #
     batch_size=opt.batch_size,
     shuffle=True,
     num_workers=opt.n_cpu,

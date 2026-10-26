@@ -81,8 +81,8 @@ class TargetImageDataset(Dataset):
 
 if __name__ == '__main__':
     dataset = SourceImageDataset(
-        labels_root='',  # TODO: set local path
-        inputs_root='')  # TODO: set local path
+        labels_root='',  #
+        inputs_root='')  #
     for low, l2, l3, normal, n2, n3 in dataset:
         print(low.shape)
         print(l2.shape)

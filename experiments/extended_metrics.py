@@ -19,7 +19,7 @@ import torch
 from scipy.ndimage import uniform_filter, sobel
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, '')  # for pickled model3/model6  # TODO: set local path
+sys.path.insert(0, '')  #   #
 from common import imread01, nct_test_pairs, metrics, NCT_REF, NCT_LOW, wavelet_branch
 
 
@@ -68,7 +68,7 @@ def main():
                            pairs, run, results)
 
     # original UDAN best41 checkpoint (unified protocol inference)
-    ckpt_path = ''  # TODO: set local path
+    ckpt_path = ''  #
     if os.path.exists(ckpt_path):
         with open(ckpt_path, 'rb') as f:
             net = torch.load(f, map_location='cuda')
@@ -86,7 +86,7 @@ def main():
 
         analyze_arrays(udan_img, pairs, 'UDAN-orig-best41', results)
 
-    # per-image min-max normalized variant (the paper's display protocol)
+    # per-image min-max normalized variant (this work's display protocol)
     def norm_img(a):
         a = a.astype(float)
         return (a - a.min()) / (a.max() - a.min() + 1e-12)

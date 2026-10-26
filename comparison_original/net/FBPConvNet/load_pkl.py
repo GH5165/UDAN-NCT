@@ -10,7 +10,7 @@ from math import sqrt
 import time
 import os
 
-os.makedirs('', exist_ok=True)  # TODO: set local path
+os.makedirs('', exist_ok=True)  #
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -20,8 +20,8 @@ total_p = 0  # psnr
 total_r = 0  # rmse
 
 test_loader = DataLoader(
-    ImageDataset(labels_root='',  # TODO: set local path
-                 inputs_root=''),  # TODO: set local path
+    ImageDataset(labels_root='',  #
+                 inputs_root=''),  #
     batch_size=1,
     shuffle=False,
     drop_last=True,
@@ -29,7 +29,7 @@ test_loader = DataLoader(
     # sampler=DistributedSampler(ImageDataset)
 )
 
-net = torch.load('')  # TODO: set local path
+net = torch.load('')  #
 net = net.cuda()
 i = 1
 
@@ -48,14 +48,14 @@ if __name__ == '__main__':
             time_start = time.time()
             gen_imgs = net(inputs)
             time_end = time.time()
-            with open('', "a") as a:  # TODO: set local path
+            with open('', "a") as a:  #
                 a.write("|num: %s| |time: %f |\r\n"
                         % (i, (time_end - time_start)))
                 a.close()
             gen_imgs = gen_imgs.squeeze(-3)
             gen_imgs = gen_imgs.squeeze(0)
             a = str(i).zfill(6)
-            save_image(gen_imgs, '' % a, normalize=False)  # TODO: set local path
+            save_image(gen_imgs, '' % a, normalize=False)  #
             gen_imgs = gen_imgs.cpu().numpy()
 
             # print('labels type:', labels.__class__)
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
             r = sqrt(mse(labels, gen_imgs))
             # print(m.__class__)
-            with open('', "a") as a:  # TODO: set local path
+            with open('', "a") as a:  #
                 a.write("|num: %s| |SSIM: %s | |PSNR: %s| |RMSE: %s |\r\n"
                         % (i, s, p, r))
                 a.close()
@@ -76,7 +76,7 @@ if __name__ == '__main__':
             total_s += float(s.item())
             total_p += float(p.item())
             total_r += float(r)
-    with open('', "a") as f:  # TODO: set local path
+    with open('', "a") as f:  #
         f.write("|Average SSIM: %f | |Average PSNR: %f| |Average RMSE: %f |\r\n"
                 % (total_s/len(test_loader), total_p/len(test_loader),
                    total_r/len(test_loader)))

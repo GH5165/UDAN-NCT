@@ -18,7 +18,7 @@ os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # in_folder = ''
-in_folder = ''  # TODO: set local path
+in_folder = ''  #
 netName = "FBPConvNet-nd_ndct"
 # netName = "REDCNN-nd_ndct"
 # netName = "DnCNN-nd_ndct"
@@ -34,7 +34,7 @@ batch_size = 1
 test_loader = DataLoader(
     # dataset=ImageDataset(inputs_root='',
     dataset=ImageDataset(inputs_root=in_folder,
-                         labels_root=''),  # TODO: set local path
+                         labels_root=''),  #
     batch_size=batch_size,
     shuffle=True,
     # num_workers=4

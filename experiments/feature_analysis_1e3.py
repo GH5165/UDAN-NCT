@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Feature-space alignment analysis on the I0=1e3 low-flux regime.
+"""Feature-space alignment analysis on the I0=1e3 data.
 
 Deepest encoder features (after down4, GAP-pooled 1024-d) of 30 X-ray source
-images and 30 NCT 1e3 target images, for the label-free UDAN (with MMD) vs
-the same architecture trained without MMD (direct transfer):
+images and 30 NCT 1e3 target images, for the UDAN model (with MMD) vs
+the same architecture trained without MMD:
 linear MMD^2, normalized mean-embedding distance, domain probe (logistic
 regression, 5-fold CV, 16-d PCA subspace), and a shared-axis PCA projection.
 """
@@ -23,13 +23,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, '')  # TODO: set local path
+sys.path.insert(0, '')  #
 from common import imread01, XRAY_LOW, wavelet_branch, load_torch
 from nets import UDANRes
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RUNS = os.path.join(HERE, 'runs')
-NCT_1E3 = ''  # TODO: set local path
+NCT_1E3 = ''  #
 UDAN_RUN = os.environ.get('UDAN_RUN', 'U1c')
 NOMMD_RUN = 'UDANRes-noMMD'
 N_PER = 30

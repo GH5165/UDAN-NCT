@@ -2,8 +2,7 @@
 """Circular-mask evaluation + UDAN error decomposition.
 
 1) Evaluate all methods with metrics computed inside the inscribed circle of
-   the reconstruction FOV (user-requested protocol; excludes FDK peripheral
-   artifacts). Radii {200, 224, 240, 250} tested on all saved outputs.
+   the reconstruction FOV (excludes FDK peripheral artifacts). Radii {200, 224, 240, 250} tested on all saved outputs.
 2) Decompose UDAN's error: per-image global affine correction (a*out+b -> ref,
    least squares) separates photometric calibration error from structural
    error. If affine-corrected PSNR jumps, the deficit is calibration, not

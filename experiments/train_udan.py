@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""UDA training (UDAN and MMD-transplanted variants) for the revision experiments.
+"""UDA training (UDAN and MMD-transplanted variants).
 
 Faithful re-implementation of the original lowdose_MMD1/main.py training loop:
   - source: X-ray pairs (low-dose input -> normal-dose label), supervised MSE
@@ -9,7 +9,7 @@ Faithful re-implementation of the original lowdose_MMD1/main.py training loop:
     original mix_rbf_mmd2 call chain), summed over channels and batch and
     normalized by (batch * n_channels/4) — reproducing the original
     `loss_mmd / (batch_size * 256)` for 1024 channels.
-  - total loss = MSE + lambda_mmd * MMD   (lambda 1.0 reproduces the paper)
+  - total loss = MSE + lambda_mmd * MMD   (lambda_mmd 1.0 is the default)
 
 Configurable: --model {udan, udan_nowt, dncnn_mmd, redcnn_mmd},
 --mmd {on, off}, --mmd_loc {down4, down3}, --sigma, --lam, --bs,

@@ -43,7 +43,7 @@ def get_lightness(src):
 
 if __name__ == '__main__':
 
-    root_path = ''  # TODO: set local path
+    root_path = ''  #
     # root_path = ''
     # root_path = ''
 

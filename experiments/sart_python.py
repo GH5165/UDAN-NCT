@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """SART reconstruction of the low-flux NCT test slices (Python, scikit-image).
 
-Revised protocol (documented in the manuscript):
+Protocol:
   1. Re-project the low-flux FDK slice: p = radon(x, 360 views over [0,180), circle).
   2. Simulate low-count acquisition, TIGRE addCTnoise-style:
      pn = Poisson(I0 * exp(-p / p.max())), I0 = 5e4;

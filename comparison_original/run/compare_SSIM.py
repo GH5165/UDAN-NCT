@@ -15,7 +15,7 @@ from myTool.mkdir import mkdir
 from myTool.myNormalization import myNormalization
 
 # label_folder = ''
-label_folder = ''  # TODO: set local path
+label_folder = ''  #
 # netName = "FBPConvNet-ld_ndct"
 # netName = "REDCNN-ld_ndct"
 # netName = "DnCNN-ld_ndct"  #
@@ -23,7 +23,7 @@ label_folder = ''  # TODO: set local path
 # netName = "SART"  #
 # in_folder = f''
 netName = "noise2_model3_best41"
-in_folder = f''  # TODO: set local path
+in_folder = f''  #
 # netName = "self"
 # in_folder = label_folder
 
