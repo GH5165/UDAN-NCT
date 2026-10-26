@@ -7,7 +7,7 @@ framework and all comparison methods.
 udan_original/         Original UDAN training code (PyTorch)
 comparison_original/   Original DnCNN / REDCNN / FBPConvNet training code
 matlab/                FRM-II projection -> FDK/SART pipeline (TIGRE)
-experiments/           Unified-protocol training and evaluation scripts
+revision_experiments/  Unified-protocol training and evaluation scripts
 results/               Evaluation outputs (per-condition metrics, feature statistics)
 ```
 
@@ -30,7 +30,7 @@ comments; set these paths to your own data layout before running.
 - UDAN deployment: EMA weights (decay 0.9995) and horizontal-flip self-ensembling;
   comparison methods use native single-pass inference.
 
-## `experiments/` contents
+## `revision_experiments/` contents
 
 | File | Purpose |
 |---|---|
@@ -48,7 +48,7 @@ comments; set these paths to your own data layout before running.
 | `sart_python.py` | Re-projection SART baseline with early stopping |
 | `common.py` | Shared data loading and metric utilities |
 
-Update the path constants in `experiments/common.py` and the data-path
+Update the path constants in `revision_experiments/common.py` and the data-path
 constants at the top of the evaluation/generation scripts to match your local
 layout. No NCT data are redistributed here; FRM-II projections are available
 under the license described in the paper's Data Availability statement.
